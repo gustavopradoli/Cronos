@@ -1,0 +1,24 @@
+{
+  "name": "cronos",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Cronos - Orquestrador em Node + React com TypeScript",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -n \"server,web\" -c \"blue,green\" \"npm run dev:server\" \"npm run dev:web\"",
+    "dev:server": "npm --workspace=@cronos/server run dev",
+    "dev:web": "npm --workspace=@cronos/web run dev",
+    "build": "npm --workspace=@cronos/shared run build && npm --workspace=@cronos/server run build && npm --workspace=@cronos/web run build",
+    "build:shared": "npm --workspace=@cronos/shared run build",
+    "build:server": "npm --workspace=@cronos/server run build",
+    "build:web": "npm --workspace=@cronos/web run build",
+    "start": "npm --workspace=@cronos/server run start"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "typescript": "^6.0.3"
+  }
+}
