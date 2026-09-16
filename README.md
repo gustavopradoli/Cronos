@@ -39,36 +39,46 @@ Cronos/
 ## 🚀 Como Executar
 
 ### 1. Pré-requisitos
+
 - Node.js (v20+)
 - npm (v10+)
 
 ### 2. Instalação das dependências
+
 Na raiz do projeto:
+
 ```bash
 npm install
 ```
 
 ### 3. Rodando em Modo de Desenvolvimento
+
 Para rodar tanto o servidor quanto o frontend simultaneamente:
+
 ```bash
 npm run dev
 ```
+
 - **Backend**: http://localhost:3001 (Endpoint de teste: `http://localhost:3001/health`)
 - **Frontend**: http://localhost:3000
 
 Você também pode rodar isoladamente:
+
 ```bash
 npm run dev:server  # Apenas o backend (com hot reload via tsx)
 npm run dev:web     # Apenas o frontend (com HMR via Vite)
 ```
 
 ### 4. Build de Produção
+
 Compila todos os pacotes na ordem correta (`shared` ➔ `server` ➔ `web`):
+
 ```bash
 npm run build
 ```
 
 ### 5. Iniciar Servidor em Produção
+
 ```bash
 npm run start
 ```
