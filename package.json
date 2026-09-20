@@ -8,14 +8,17 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "concurrently -n \"server,web\" -c \"blue,green\" \"npm run dev:server\" \"npm run dev:web\"",
+    "dev": "concurrently -n \"server,realtime,web\" -c \"blue,magenta,green\" \"npm --silent --workspace=@cronos/server run dev\" \"npm --silent --workspace=@cronos/realtime run dev\" \"npm --silent --workspace=@cronos/web run dev\"",
     "dev:server": "npm --workspace=@cronos/server run dev",
+    "dev:realtime": "npm --workspace=@cronos/realtime run dev",
     "dev:web": "npm --workspace=@cronos/web run dev",
-    "build": "npm --workspace=@cronos/shared run build && npm --workspace=@cronos/server run build && npm --workspace=@cronos/web run build",
+    "build": "npm run build:shared && npm run build:server && npm run build:realtime && npm run build:web",
     "build:shared": "npm --workspace=@cronos/shared run build",
     "build:server": "npm --workspace=@cronos/server run build",
+    "build:realtime": "npm --workspace=@cronos/realtime run build",
     "build:web": "npm --workspace=@cronos/web run build",
-    "start": "npm --workspace=@cronos/server run start"
+    "start": "npm --workspace=@cronos/server run start",
+    "start:realtime": "npm --workspace=@cronos/realtime run start"
   },
   "devDependencies": {
     "concurrently": "^9.1.2",
