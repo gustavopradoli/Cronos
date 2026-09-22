@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import App from '../App';
 import Layout from '../components/layout/Layout';
 import { OrchestratorScreen } from '../pages/OrchestratorScreen';
+import Historico from '../pages/Historico';
 
 function getPathname() {
     return window.location.pathname.replace(/\/$/, '') || '/';
@@ -26,6 +27,14 @@ export default function Routes() {
             </Layout>
         );
     }
+    if (pathname === '/historico') {
+        return (
+            <Layout activeItem="historico">
+                <Historico />
+            </Layout>
+        );
+    }
+
 
     return <App />;
 }

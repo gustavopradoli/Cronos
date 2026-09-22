@@ -97,7 +97,7 @@ const navItems: NavItem[] = [
         Icon: IconAutomation,
         children: [
             { id: 'automation-tests', label: 'Orquestrações' },
-            { id: 'automation-history', label: 'Histórico de execuções' },
+            { id: 'automation-history', label: 'Histórico' },
         ],
     },
     {
@@ -150,6 +150,11 @@ export default function Sidebar({
     const handleNav = (id: string) => {
         onNavigate?.(id);
         setMobileOpen(false);
+
+        if (id === 'dashboard') {
+            window.history.pushState({}, '', '/');
+            window.dispatchEvent(new PopStateEvent('popstate'));
+        }
     };
 
     const handleSubmenuNav = (id: string) => {
@@ -159,6 +164,11 @@ export default function Sidebar({
             window.history.pushState({}, '', '/orquestrador');
             window.dispatchEvent(new PopStateEvent('popstate'));
         }
+        if (id === 'automation-history') {
+            window.history.pushState({}, '', '/historico');
+            window.dispatchEvent(new PopStateEvent('popstate'));
+        }
+
     };
 
     const toggleSubmenu = (id: string) => {
