@@ -179,7 +179,7 @@ export function OrchestratorScreen() {
     }
 
     return (
-        <main className="orchestrator-shell">
+        <div>
             <section className="orchestrator-hero">
                 <div>
                     <p className="eyebrow">Cronos Orquestrador</p>
@@ -240,7 +240,7 @@ export function OrchestratorScreen() {
                     <section className="automation-table" aria-label="Lista de automações">
                         <div className="automation-table-scroll">
                             <div className="automation-head">
-                                <span>ID automação</span>
+                                <span>ID</span>
                                 <span>Nome</span>
                                 <span>Horário trigger</span>
                                 <span>Tipo execução</span>
@@ -324,6 +324,7 @@ export function OrchestratorScreen() {
                     </section>
                 </div>
             )}
-        </main>
+        </div>
+
     );
 }
