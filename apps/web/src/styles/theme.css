@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
-:root { --color-primary: #5b21b6; --color-accent: #facc15; --color-ink: #1e1b4b; --color-surface: #f8fafc; --color-white: #fff; --color-muted: #625f78; --color-line: #e7e5ed; font-family: 'DM Sans', sans-serif; color: var(--color-ink); background: var(--color-surface); }
+:root { --color-primary: #5b21b6; --color-accent: #facc15; --color-ink: #1e1b4b; --color-surface: #eef1f6; --color-white: #fff; --color-muted: #625f78; --color-line: #dfe3ec; --color-skeleton: #e2e0ea; --color-skeleton-shine: #f0eef5; --sidebar-width: 260px; --sidebar-collapsed: 78px; font-family: 'DM Sans', sans-serif; color: var(--color-ink); background: #1e1b4b; }
 * { box-sizing: border-box; }
-body { margin: 0; min-width: 320px; }
+html, body, #root { margin: 0; padding: 0; min-width: 320px; background-color: #1e1b4b; }
 .shell { min-height: 100vh; padding: 48px clamp(24px, 7vw, 112px) 72px; background: var(--color-surface); }
 .page-header { max-width: 1180px; margin: 0 auto 72px; }
 .eyebrow { margin: 0 0 10px; color: var(--color-primary); font-size: 12px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; }
