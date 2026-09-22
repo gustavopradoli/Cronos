@@ -62,6 +62,21 @@ export default function AuthPage({ onAuthenticated }: AuthPageProps) {
     setAuthError('');
 
     if (isSignUp) {
+      const savedCredentials = localStorage.getItem(testCredentialsKey);
+
+      if (savedCredentials) {
+        try {
+          const credentials = JSON.parse(savedCredentials) as { email: string; password: string };
+
+          if (credentials.email === normalizedEmail) {
+            setAuthError('Este e-mail já está cadastrado.');
+            return;
+          }
+        } catch {
+          localStorage.removeItem(testCredentialsKey);
+        }
+      }
+
       localStorage.setItem(testCredentialsKey, JSON.stringify({ email: normalizedEmail, password }));
       onAuthenticated();
       return;
@@ -150,7 +165,7 @@ export default function AuthPage({ onAuthenticated }: AuthPageProps) {
               {isSignUp && <label className="check-row"><input type="checkbox" required /><span>Concordo com os <button type="button" className="inline-link">termos de uso</button> e a política de privacidade.</span></label>}
               {!isSignUp && <label className="check-row"><input type="checkbox" /><span>Manter minha sessão ativa</span></label>}
               {authError && <p className="auth-error" role="alert">{authError}</p>}
-              <button className="submit-button" type="submit">{isSignUp ? 'Criar meu espaço' : 'Entrar no Cronos'}<span aria-hidden="true">→</span></button>
+              <button className="submit-button" type="submit">{isSignUp ? 'Cadastrar' : 'Entrar no Cronos'}<span aria-hidden="true">→</span></button>
             </form>
           </div>
           <div className="form-footer"><span>© {currentYear} Cronos</span><span>Feito para mover ideias</span></div>

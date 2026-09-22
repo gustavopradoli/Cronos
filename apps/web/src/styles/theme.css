@@ -35,8 +35,10 @@ button {
 
 .auth-page {
   display: grid;
-  min-height: 100vh;
+  height: 100vh;
   grid-template-columns: minmax(440px, 43%) 1fr;
+  min-height: 0;
+  overflow: hidden;
 }
 .brand-panel {
   background: var(--color-primary-deep);
@@ -44,7 +46,7 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 100vh;
+  min-height: 0;
   overflow: hidden;
   padding: 42px clamp(36px, 6vw, 92px) 46px;
   position: relative;
@@ -157,26 +159,33 @@ button {
 }
 .brand-panel__carousel-controls {
   display: flex;
-  gap: 7px;
-  max-width: 350px;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
 }
 .carousel-dot {
+  appearance: none;
   background: rgba(255, 255, 255, 0.35);
   border: 0;
   border-radius: 99px;
-  height: 4px;
+  display: block;
+  flex: 0 0 20px;
+  height: 3px;
+  margin: 0;
+  max-width: 20px;
+  min-width: 20px;
   padding: 0;
   transition:
     background 0.25s,
-    width 0.25s;
-  width: 22px;
+    opacity 0.25s;
+  width: 20px;
 }
 .carousel-dot:hover,
 .carousel-dot.is-active {
   background: var(--color-accent);
 }
 .carousel-dot.is-active {
-  width: 42px;
+  opacity: 1;
 }
 
 .form-panel {
@@ -184,14 +193,16 @@ button {
   background: var(--color-surface);
   display: flex;
   justify-content: center;
-  padding: 54px 7%;
+  min-height: 0;
+  overflow: hidden;
+  padding: 36px 7%;
 }
 .form-panel__inner {
   max-width: 440px;
   width: 100%;
 }
 .form-heading {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 .form-heading__kicker {
   color: var(--color-primary);
@@ -230,7 +241,7 @@ button {
   border-radius: 7px;
   display: flex;
   gap: 4px;
-  margin-bottom: 26px;
+  margin-bottom: 18px;
   padding: 4px;
   position: relative;
 }
@@ -263,7 +274,7 @@ button {
 }
 .auth-form {
   display: grid;
-  gap: 17px;
+  gap: 12px;
 }
 .field {
   color: var(--color-ink);
@@ -283,7 +294,7 @@ button {
   border-radius: 6px;
   color: var(--color-ink);
   outline: 0;
-  padding: 13px 14px;
+  padding: 11px 14px;
   transition:
     border 0.2s,
     box-shadow 0.2s;
@@ -313,6 +324,7 @@ button {
   margin: -3px 0 0;
 }
 .password-input {
+  display: block;
   position: relative;
 }
 .password-input input {
@@ -329,29 +341,40 @@ button {
   padding: 0;
 }
 .password-toggle {
+  line-height: 1;
   position: absolute;
   right: 14px;
-  top: 14px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 .forgot-link {
   font-size: 11px;
   font-weight: 600;
 }
 .check-row {
-  align-items: start;
+  align-items: center;
   color: var(--color-muted);
   display: flex;
   font-size: 11px;
   gap: 9px;
   line-height: 1.45;
 }
+.check-row > span {
+  flex: 1;
+  line-height: 1.45;
+}
 .check-row input {
   accent-color: var(--color-primary);
-  margin: 1px 0 0;
+  flex: 0 0 13px;
+  height: 13px;
+  margin: 0;
+  width: 13px;
 }
 .inline-link {
+  display: inline;
   font-size: inherit;
   text-decoration: underline;
+  vertical-align: baseline;
 }
 .submit-button {
   align-items: center;
@@ -385,8 +408,8 @@ button {
   display: flex;
   font-size: 10px;
   justify-content: space-between;
-  margin-top: 58px;
-  padding-top: 17px;
+  margin-top: 28px;
+  padding-top: 12px;
 }
 .brand-logo {
   display: block;
@@ -405,6 +428,9 @@ button {
 @media (max-width: 800px) {
   .auth-page {
     display: block;
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
   }
   .brand-panel {
     min-height: 315px;
@@ -422,6 +448,7 @@ button {
   }
   .form-panel {
     align-items: start;
+    overflow: visible;
     padding: 38px 28px 28px;
   }
   .form-panel__inner {

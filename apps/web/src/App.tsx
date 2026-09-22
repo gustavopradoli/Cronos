@@ -1,14 +1,22 @@
-import { useState } from 'react';
+import { BrowserRouter, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import AuthPage from './pages/AuthPage';
 import Dashboard from './pages/Dashboard';
 import './styles/theme.css';
 
 export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route element={<AuthRoute />} path="/" />
+        <Route element={<Dashboard />} path="/dashboard" />
+        <Route element={<Navigate replace to="/" />} path="*" />
+      </Routes>
+    </BrowserRouter>
+  );
+}
 
-  if (isAuthenticated) {
-    return <Dashboard />;
-  }
+function AuthRoute() {
+  const navigate = useNavigate();
 
-  return <AuthPage onAuthenticated={() => setIsAuthenticated(true)} />;
+  return <AuthPage onAuthenticated={() => navigate('/dashboard')} />;
 }
