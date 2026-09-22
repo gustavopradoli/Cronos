@@ -1,0 +1,110 @@
+/* ─── Skeleton Loading ─── */
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -600px 0;
+  }
+  100% {
+    background-position: 600px 0;
+  }
+}
+
+.skeleton {
+  display: block;
+  background: linear-gradient(
+    90deg,
+    var(--color-skeleton, #e2e0ea) 0%,
+    var(--color-skeleton-shine, #f0eef5) 40%,
+    var(--color-skeleton-shine, #f0eef5) 60%,
+    var(--color-skeleton, #e2e0ea) 100%
+  );
+  background-size: 1200px 100%;
+  animation: skeleton-shimmer 2s ease-in-out infinite;
+  border-radius: 8px;
+}
+
+/* ── Card skeleton ── */
+.skeleton-card {
+  background: var(--color-white, #fff);
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 1px 3px rgba(30, 27, 75, 0.04), 0 4px 14px rgba(30, 27, 75, 0.03);
+  border: 1px solid rgba(30, 27, 75, 0.04);
+}
+
+.skeleton-card .skeleton-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+}
+
+.skeleton-card .skeleton-value {
+  width: 50%;
+  height: 36px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+}
+
+.skeleton-card .skeleton-label {
+  width: 75%;
+  height: 14px;
+  border-radius: 6px;
+}
+
+/* ── Text line skeleton ── */
+.skeleton-text {
+  height: 14px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+
+.skeleton-text:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Table skeleton ── */
+.skeleton-table {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 4px 0;
+}
+
+.skeleton-table-row {
+  display: grid;
+  grid-template-columns: 1.5fr 2fr 1fr 1fr;
+  gap: 16px;
+  align-items: center;
+}
+
+.skeleton-table-row .skeleton {
+  height: 18px;
+  border-radius: 6px;
+}
+
+/* ── Shortcut skeleton ── */
+.skeleton-shortcut {
+  background: var(--color-white, #fff);
+  border-radius: 14px;
+  padding: 22px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 1px 3px rgba(30, 27, 75, 0.04), 0 4px 14px rgba(30, 27, 75, 0.03);
+  border: 1px solid rgba(30, 27, 75, 0.04);
+}
+
+.skeleton-shortcut .skeleton-shortcut-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.skeleton-shortcut .skeleton-shortcut-text {
+  height: 16px;
+  border-radius: 6px;
+  flex: 1;
+  max-width: 140px;
+}
