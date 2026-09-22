@@ -47,7 +47,11 @@ npm run dev
 - **Backend**: http://localhost:3001 (Endpoint de teste: `http://localhost:3001/health`)
 - **Frontend**: http://localhost:3000
 
-Você também pode rodar isoladamente:
+| Servico  | URL/porta             | Funcao              |
+| -------- | --------------------- | ------------------- |
+| Frontend | http://localhost:3000 | Interface web       |
+| Backend  | http://localhost:3001 | API e `GET /health` |
+| Realtime | ws://localhost:3002   | Eventos WebSocket   |
 
 ```bash
 npm run dev:server  # Apenas o backend (com hot reload via tsx)

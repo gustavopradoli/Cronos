@@ -1,15 +1,14 @@
 import { useState } from 'react';
-import './styles/theme.css';
-import Layout from './components/layout/Layout';
+import AuthPage from './pages/AuthPage';
 import Dashboard from './pages/Dashboard';
-
+import './styles/theme.css';
 
 export default function App() {
-    const [activeItem, setActiveItem] = useState('dashboard');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    return (
-        <Layout activeItem={activeItem} onNavigate={setActiveItem}>
-            <Dashboard />
-        </Layout>
-    );
+  if (isAuthenticated) {
+    return <Dashboard />;
+  }
+
+  return <AuthPage onAuthenticated={() => setIsAuthenticated(true)} />;
 }
