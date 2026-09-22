@@ -29,6 +29,74 @@
     font-size: 15px;
 }
 
+.history-filters {
+    display: grid;
+    grid-template-columns: minmax(220px, 1.7fr) repeat(4, minmax(145px, 1fr)) auto;
+    gap: 14px;
+    align-items: end;
+    width: calc(100% - 64px);
+    margin: 0 32px 20px;
+    padding: 18px;
+    border: 1px solid #dfe3ec;
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 4px 12px #1e1b4b08;
+}
+
+.history-filter {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.history-filter label {
+    color: #625f78;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.history-filter input,
+.history-filter select {
+    width: 100%;
+    height: 38px;
+    padding: 0 11px;
+    border: 1px solid #cbd2df;
+    border-radius: 6px;
+    outline: none;
+    background: #fbfcfe;
+    color: #37334f;
+    font: 500 12px 'DM Sans', sans-serif;
+}
+
+.history-filter input:focus,
+.history-filter select:focus {
+    border-color: #7c3aed;
+    box-shadow: 0 0 0 3px #7c3aed1a;
+}
+
+.history-filter input::placeholder {
+    color: #9a98a8;
+}
+
+.history-filter-button {
+    height: 38px;
+    padding: 0 18px;
+    border: 0;
+    border-radius: 6px;
+    background: #5b21b6;
+    color: #ffffff;
+    cursor: pointer;
+    font: 700 12px 'DM Sans', sans-serif;
+    white-space: nowrap;
+}
+
+.history-filter-button:hover {
+    background: #4c1d95;
+}
+
 .history-table-section {
     width: calc(100% - 64px);
     max-width: none;
@@ -38,6 +106,52 @@
     border-radius: 6px;
     background: #ffffff;
     box-shadow: 0 6px 16px #1e1b4b12;
+}
+
+.history-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: calc(100% - 64px);
+    margin: 14px 32px 0;
+    color: #625f78;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.history-pagination-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.history-pagination-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border: 1px solid #cbd2df;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #37334f;
+    cursor: pointer;
+    font: 600 12px 'DM Sans', sans-serif;
+}
+
+.history-pagination-button:hover:not(:disabled) {
+    border-color: #7c3aed;
+    color: #5b21b6;
+}
+
+.history-pagination-button.active {
+    border-color: #5b21b6;
+    background: #5b21b6;
+    color: #ffffff;
+}
+
+.history-pagination-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
 }
 
 .history-table {
@@ -81,6 +195,13 @@
     background: #fafaff;
 }
 
+.history-table td.history-empty {
+    padding: 32px 14px;
+    color: #625f78;
+    font-weight: 600;
+    text-align: center;
+}
+
 .history-table td:first-child {
     width: 72px;
     color: #8a879b;
@@ -92,27 +213,47 @@
     font-weight: 700;
 }
 
-.history-table td:last-child {
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 86px;
+    padding: 5px 12px;
+    border: 1px solid;
+    border-radius: 999px;
     font-size: 12px;
     font-weight: 700;
+    line-height: 1;
 }
 
-.history-table td:last-child::before {
-    display: inline-block;
-    width: 7px;
-    height: 7px;
-    margin: 0 8px 1px 0;
-    border-radius: 50%;
-    background: #22a06b;
-    content: '';
+.status-badge.status-completed {
+    color: #18794e;
+    border-color: #86efac;
+    background: #f0fdf4;
 }
 
-.history-table tbody tr:nth-child(3) td:last-child {
+.status-badge.status-running {
     color: #a16207;
+    border-color: #facc15;
+    background: #fefce8;
 }
 
-.history-table tbody tr:nth-child(3) td:last-child::before {
-    background: #eab308;
+.status-badge.status-error {
+    color: #c2413b;
+    border-color: #fca5a5;
+    background: #fef2f2;
+}
+
+.status-badge.status-parado {
+    color: #000000;
+    border-color: #9ca3af;
+    background: #f3f4f6;
+}
+
+.status-badge.status-unknown {
+    color: #625f78;
+    border-color: #cbd5e1;
+    background: #f8fafc;
 }
 
 @media (max-width: 760px) {
@@ -126,6 +267,18 @@
         margin: 0 20px 24px;
     }
 
+    .history-filters {
+        grid-template-columns: 1fr 1fr;
+        width: calc(100% - 40px);
+        margin: 0 20px 20px;
+        padding: 14px;
+    }
+
+    .history-filter-search,
+    .history-filter-button {
+        grid-column: 1 / -1;
+    }
+
     .history-table th,
     .history-table td {
         padding-right: 12px;
@@ -133,6 +286,12 @@
     }
 
     .history-table-section {
+        width: calc(100% - 40px);
+        margin-right: 20px;
+        margin-left: 20px;
+    }
+
+    .history-pagination {
         width: calc(100% - 40px);
         margin-right: 20px;
         margin-left: 20px;

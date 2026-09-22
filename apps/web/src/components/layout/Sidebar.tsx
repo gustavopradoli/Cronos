@@ -98,6 +98,7 @@ const navItems: NavItem[] = [
         children: [
             { id: 'automation-tests', label: 'Orquestrações' },
             { id: 'automation-history', label: 'Histórico' },
+            { id: 'automation-trigger', label: 'Gatilhos' },
         ],
     },
     {
