@@ -37,11 +37,11 @@ npm run dev
 
 O comando `npm run dev` inicia os tres servicos:
 
-| Servico | URL/porta | Funcao |
-| --- | --- | --- |
-| Frontend | http://localhost:3000 | Interface web |
-| Backend | http://localhost:3001 | API e `GET /health` |
-| Realtime | ws://localhost:3002 | Eventos WebSocket |
+| Servico  | URL/porta             | Funcao              |
+| -------- | --------------------- | ------------------- |
+| Frontend | http://localhost:3000 | Interface web       |
+| Backend  | http://localhost:3001 | API e `GET /health` |
+| Realtime | ws://localhost:3002   | Eventos WebSocket   |
 
 Para iniciar um servico isoladamente, use `npm run dev:web`, `npm run dev:server` ou `npm run dev:realtime`.
 
