@@ -1,42 +1,27 @@
-# Cronos — Orquestrador
+# Cronos
 
-Projeto orquestrador construído com arquitetura monorepo utilizando **Node.js**, **React**, **TypeScript** e suporte para **PostgreSQL**.
+Base do projeto integrador para orquestracao de tarefas e automacoes. O repositorio usa um monorepo com npm workspaces, TypeScript e responsabilidades separadas por aplicacao.
 
----
-
-## 📁 Estrutura do Repositório
+## Estrutura
 
 ```text
 Cronos/
 ├── apps/
-│   ├── server/           # Backend (Node.js + Express + TypeScript)
-│   │   ├── src/
-│   │   │   └── index.ts  # Servidor HTTP inicial com healthcheck (/health)
-│   │   ├── package.json
-│   │   └── tsconfig.json
-│   └── web/              # Frontend (React 19 + Vite + TypeScript)
-│       ├── src/
-│       │   ├── App.tsx   # Componente raiz minimalista
-│       │   └── main.tsx  # Ponto de montagem React
-│       ├── index.html
-│       ├── vite.config.ts
-│       ├── package.json
-│       └── tsconfig.json
+│   ├── web/                 # Frontend React + Vite
+│   ├── server/              # Backend HTTP/API Express
+│   └── realtime/            # WebSocket e automacoes em tempo real
 ├── packages/
-│   └── shared/           # Tipos, interfaces e contratos compartilhados
-│       ├── src/
-│       │   └── index.ts  # Definições (JobStatus, BaseJob, ApiResponse, etc.)
-│       ├── package.json
-│       └── tsconfig.json
-├── .env.example          # Exemplo de variáveis de ambiente (PORT, DATABASE_URL)
-├── .gitignore            # Ignora node_modules, dist, .env, etc.
-├── package.json          # Root workspace com scripts unificados
-└── tsconfig.base.json    # Configurações base de TypeScript
+│   └── shared/              # Tipos e contratos entre aplicacoes
+├── cores/                   # Referencia original da paleta
+└── .env.example
 ```
 
----
+## Responsabilidades
 
-## 🚀 Como Executar
+- **web**: paginas, componentes, estilos e chamadas para a API.
+- **server**: endpoints HTTP, regras de negocio e integracoes.
+- **realtime**: conexoes WebSocket, eventos e gerenciamento de automacoes.
+- **shared**: tipos conhecidos pelo frontend e pelos servicos.
 
 ### 1. Pré-requisitos
 
@@ -81,19 +66,29 @@ npm run build
 
 ```bash
 npm run start
+npm run start:realtime
 ```
 
----
+O build compila `shared`, `server`, `realtime` e `web` nessa ordem.
 
-## 👥 Guia para a Equipe de Desenvolvimento
+## Como evoluir
 
-1. **Novos Módulos do Backend**:
-   - Crie submódulos dentro de `apps/server/src/` (ex: `apps/server/src/modules/scheduler/`, `apps/server/src/modules/tasks/`, etc.).
-   - O driver PostgreSQL (`pg` e `@types/pg`) já está listado nas dependências.
+1. Crie modulos de dominio em `apps/server/src/modules/`.
+2. Crie paginas e componentes em `apps/web/src/`.
+3. Mantenha conexoes e eventos em `apps/realtime/src/`.
+4. Adicione contratos compartilhados em `packages/shared/src/`.
 
-2. **Novos Componentes e Telas do Frontend**:
-   - Crie componentes em `apps/web/src/components/`, páginas em `apps/web/src/pages/`, etc.
-   - O Vite já possui proxy configurado para `/api` redirecionar automaticamente para o backend (`http://localhost:3001`).
+## Paleta e estilos
 
-3. **Contratos e Tipagens Compartilhadas**:
-   - Qualquer tipo de dados ou interface compartilhado entre backend e frontend deve ser adicionado em `packages/shared/src/index.ts`.
+`cores/palheta.jpeg` permanece como referencia visual. Os valores estao centralizados como tokens CSS em `apps/web/src/styles/theme.css`:
+
+- `--color-primary`: `#5B21B6`
+- `--color-accent`: `#FACC15`
+- `--color-ink`: `#1E1B4B`
+- `--color-surface`: `#F8FAFC`
+
+Importe o tema em novas telas e use `var(--color-primary)` ou os demais tokens. Assim, a identidade visual e alterada em um unico lugar.
+
+## Dependencias
+
+As dependencias atuais sao as necessarias para a base funcionar. PostgreSQL nao foi incluido porque ainda nao existe persistencia implementada; ele deve ser adicionado junto com o modulo de banco quando essa etapa comecar.

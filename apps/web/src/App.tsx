@@ -1,8 +1,15 @@
+import { useState } from 'react';
+import './styles/theme.css';
+import Layout from './components/layout/Layout';
+import Dashboard from './pages/Dashboard';
+
+
 export default function App() {
-  return (
-    <main>
-      <h1 style={{ textAlign: 'center', fontFamily: 'Arial, sans-serif' }}>Cronos Orchestrator</h1>
-      <p style={{ textAlign: 'center', fontFamily: 'Arial, sans-serif'}} >Projeto inicial configurado. Pronto para divisão de módulos.</p>
-    </main>
-  );
+    const [activeItem, setActiveItem] = useState('dashboard');
+
+    return (
+        <Layout activeItem={activeItem} onNavigate={setActiveItem}>
+            <Dashboard />
+        </Layout>
+    );
 }

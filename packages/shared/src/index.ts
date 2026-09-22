@@ -13,3 +13,11 @@ export interface ApiResponse<T = unknown> {
   data?: T;
   error?: string;
 }
+
+export type AutomationEventType = 'realtime.connected' | 'automation.command' | 'automation.status';
+
+export interface AutomationEvent<T = unknown> {
+  type: AutomationEventType;
+  occurredAt: string;
+  payload?: T;
+}
