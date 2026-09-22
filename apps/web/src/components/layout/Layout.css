@@ -1,0 +1,31 @@
+/* ─── Layout ─── */
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #1e1b4b;
+}
+
+.layout-main {
+  flex: 1;
+  margin-left: var(--sidebar-width, 260px);
+  padding: 36px clamp(28px, 4vw, 56px) 56px;
+  background:
+    radial-gradient(circle at 92% 4%, rgba(124, 58, 237, 0.08), transparent 28%),
+    linear-gradient(135deg, #f5f7fb 0%, var(--color-surface, #eef1f6) 55%, #e9edf4 100%);
+  min-height: 100vh;
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  max-width: 100%;
+}
+
+.layout.layout--collapsed .layout-main {
+  margin-left: var(--sidebar-collapsed, 78px);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .layout-main {
+    margin-left: 0 !important;
+    padding: 76px 20px 36px;
+  }
+}

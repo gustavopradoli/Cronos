@@ -23,19 +23,29 @@ Cronos/
 - **realtime**: conexoes WebSocket, eventos e gerenciamento de automacoes.
 - **shared**: tipos conhecidos pelo frontend e pelos servicos.
 
-## Pre-requisitos
+### 1. Pré-requisitos
 
-- Node.js 20 ou superior
-- npm 10 ou superior
+- Node.js (v20+)
+- npm (v10+)
 
-## Instalacao e desenvolvimento
+### 2. Instalação das dependências
+
+Na raiz do projeto:
 
 ```bash
 npm install
+```
+
+### 3. Rodando em Modo de Desenvolvimento
+
+Para rodar tanto o servidor quanto o frontend simultaneamente:
+
+```bash
 npm run dev
 ```
 
-O comando `npm run dev` inicia os tres servicos:
+- **Backend**: http://localhost:3001 (Endpoint de teste: `http://localhost:3001/health`)
+- **Frontend**: http://localhost:3000
 
 | Servico  | URL/porta             | Funcao              |
 | -------- | --------------------- | ------------------- |
@@ -43,12 +53,22 @@ O comando `npm run dev` inicia os tres servicos:
 | Backend  | http://localhost:3001 | API e `GET /health` |
 | Realtime | ws://localhost:3002   | Eventos WebSocket   |
 
-Para iniciar um servico isoladamente, use `npm run dev:web`, `npm run dev:server` ou `npm run dev:realtime`.
+```bash
+npm run dev:server  # Apenas o backend (com hot reload via tsx)
+npm run dev:web     # Apenas o frontend (com HMR via Vite)
+```
 
-## Build e producao
+### 4. Build de Produção
+
+Compila todos os pacotes na ordem correta (`shared` ➔ `server` ➔ `web`):
 
 ```bash
 npm run build
+```
+
+### 5. Iniciar Servidor em Produção
+
+```bash
 npm run start
 npm run start:realtime
 ```
