@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import App from '../App';
 import Layout from '../components/layout/Layout';
 import { OrchestratorScreen } from '../pages/OrchestratorScreen';
+import Gatilhos from '../pages/Gatilhos';
+import Maquinas from '../pages/Maquinas';
 import Historico from '../pages/Historico';
 
 function getPathname() {
@@ -20,21 +22,37 @@ export default function Routes() {
         return () => window.removeEventListener('popstate', handlePopState);
     }, []);
 
-    if (pathname === '/orquestrador') {
+    if (pathname === '/orquestrador' || pathname === '/automacoes') {
         return (
-            <Layout activeItem="automations">
+            <Layout activeItem="automation-cadastro">
                 <OrchestratorScreen />
             </Layout>
         );
     }
-    if (pathname === '/historico') {
+
+    if (pathname === '/gatilhos') {
         return (
-            <Layout activeItem="historico">
-                <Historico />
+            <Layout activeItem="automation-trigger">
+                <Gatilhos />
             </Layout>
         );
     }
 
+    if (pathname === '/maquinas') {
+        return (
+            <Layout activeItem="automation-machines">
+                <Maquinas />
+            </Layout>
+        );
+    }
+
+    if (pathname === '/historico') {
+        return (
+            <Layout activeItem="automation-history">
+                <Historico />
+            </Layout>
+        );
+    }
 
     return <App />;
 }

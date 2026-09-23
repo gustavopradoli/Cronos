@@ -8,7 +8,8 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "concurrently -n \"server,realtime,web\" -c \"blue,magenta,green\" \"npm --silent --workspace=@cronos/server run dev\" \"npm --silent --workspace=@cronos/realtime run dev\" \"npm --silent --workspace=@cronos/web run dev\"",
+    "db:update": "node scripts/update-db.mjs",
+    "dev": "npm run db:update && concurrently -n \"server,realtime,web\" -c \"blue,magenta,green\" \"npm --silent --workspace=@cronos/server run dev\" \"npm --silent --workspace=@cronos/realtime run dev\" \"npm --silent --workspace=@cronos/web run dev\"",
     "dev:server": "npm --workspace=@cronos/server run dev",
     "dev:realtime": "npm --workspace=@cronos/realtime run dev",
     "dev:web": "npm --workspace=@cronos/web run dev",

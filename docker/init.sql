@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS automacoes (
     data_atualizacao TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TRIGGER trg_automacoes_updated_at
+CREATE OR REPLACE TRIGGER trg_automacoes_updated_at
 BEFORE UPDATE ON automacoes
 FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS maquinas (
     data_atualizacao TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TRIGGER trg_maquinas_updated_at
+CREATE OR REPLACE TRIGGER trg_maquinas_updated_at
 BEFORE UPDATE ON maquinas
 FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS gatilhos (
     data_atualizacao TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TRIGGER trg_gatilhos_updated_at
+CREATE OR REPLACE TRIGGER trg_gatilhos_updated_at
 BEFORE UPDATE ON gatilhos
 FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 
