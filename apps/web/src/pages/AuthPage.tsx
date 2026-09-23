@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { BrandMark } from '../components/BrandMark';
+import RecoverPassword from './RecoverPassword';
 
 type AuthPageProps = {
   onAuthenticated: () => void;
@@ -31,6 +32,7 @@ const currentYear = new Date().getFullYear();
 
 export default function AuthPage({ onAuthenticated }: AuthPageProps) {
   const [isSignUp, setIsSignUp] = useState(false);
+  const [isRecovering, setIsRecovering] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [activeMessage, setActiveMessage] = useState(0);
   const [email, setEmail] = useState('');
@@ -109,6 +111,10 @@ export default function AuthPage({ onAuthenticated }: AuthPageProps) {
     setAuthError('');
   }
 
+  if (isRecovering) {
+    return <RecoverPassword onBackToLogin={() => setIsRecovering(false)} />;
+  }
+
   return (
     <main className="auth-page">
       <section className="brand-panel" aria-label="Sobre o Cronos">
@@ -154,7 +160,7 @@ export default function AuthPage({ onAuthenticated }: AuthPageProps) {
             <form className="auth-form" onSubmit={handleSubmit}>
               <label className="field"><span>E-mail</span><input type="email" name="email" value={email} onChange={(event) => { setEmail(event.target.value); setAuthError(''); }} placeholder="voce@empresa.com" autoComplete="email" required /></label>
               <label className="field">
-                <span className="field__label-row"><span>Senha</span>{!isSignUp && <button className="forgot-link" type="button">Esqueceu a senha?</button>}</span>
+                <span className="field__label-row"><span>Senha</span>{!isSignUp && <button className="forgot-link" type="button" onClick={() => setIsRecovering(true)}>Esqueceu a senha?</button>}</span>
                 <span className="password-input"><input type={showPassword ? 'text' : 'password'} name="password" value={password} onChange={(event) => { setPassword(event.target.value); setPasswordError(''); }} placeholder="Digite sua senha" autoComplete={isSignUp ? 'new-password' : 'current-password'} minLength={6} required /><button className="password-toggle" type="button" onClick={() => setShowPassword(!showPassword)} aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}>{showPassword ? 'Ocultar' : 'Mostrar'}</button></span>
               </label>
               {isSignUp && <label className="field">
