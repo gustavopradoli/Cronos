@@ -30,16 +30,16 @@ export default function Historico() {
     const itemsPerPage = 30;
 
     const execucoes = [
-        { id: 1, nome: 'Sincronização de dados', departamento: 'Tecnologia', inicio: '08:00:12', fim: '08:04:37', status: 'Concluído' },
-        { id: 2, nome: 'Processamento financeiro', departamento: 'Financeiro', inicio: '09:15:04', fim: '09:18:29', status: 'Concluído' },
-        { id: 3, nome: 'Envio de relatórios', departamento: 'Operações', inicio: '10:30:21', fim: '—', status: 'Em andamento' },
-        { id: 4, nome: 'Backup de dados', departamento: 'Tecnologia', inicio: '11:45:30', fim: '11:48:15', status: 'Concluído' },
-        { id: 5, nome: 'Atualização de sistema', departamento: 'Tecnologia', inicio: '12:00:00', fim: '12:05:45', status: 'Concluído' },
-        { id: 6, nome: 'Revisão de contratos', departamento: 'Jurídico', inicio: '13:20:10', fim: '13:25:55', status: 'Concluído' },
-        { id: 7, nome: 'Treinamento de equipe', departamento: 'Recursos Humanos', inicio: '14:10:05', fim: '14:15:30', status: 'Parado' },
-        { id: 8, nome: 'Análise de desempenho', departamento: 'Recursos Humanos', inicio: '15:30:45', fim: '15:35:20', status: 'Concluído' },
-        { id: 9, nome: 'Reunião de planejamento', departamento: 'Gestão', inicio: '16:00:00', fim: '16:30:00', status: 'Concluído' },
-        { id: 10, nome: 'Auditoria interna', departamento: 'Auditoria', inicio: '17:15:30', fim: '17:20:45', status: 'Erro' },
+        { id: 1, nome: 'Sincronização de dados', departamento: 'Tecnologia', inicio: '22/09/2026 08:00:12', fim: '22/09/2026 08:04:37', status: 'Concluído' },
+        { id: 2, nome: 'Processamento financeiro', departamento: 'Financeiro', inicio: '22/09/2026 09:15:04', fim: '22/09/2026 09:18:29', status: 'Concluído' },
+        { id: 3, nome: 'Envio de relatórios', departamento: 'Operações', inicio: '22/09/2026 10:30:21', fim: '—', status: 'Em andamento' },
+        { id: 4, nome: 'Backup de dados', departamento: 'Tecnologia', inicio: '22/09/2026 11:45:30', fim: '22/09/2026 11:48:15', status: 'Concluído' },
+        { id: 5, nome: 'Atualização de sistema', departamento: 'Tecnologia', inicio: '22/09/2026 12:00:00', fim: '22/09/2026 12:05:45', status: 'Concluído' },
+        { id: 6, nome: 'Revisão de contratos', departamento: 'Jurídico', inicio: '22/09/2026 13:20:10', fim: '22/09/2026 13:25:55', status: 'Concluído' },
+        { id: 7, nome: 'Treinamento de equipe', departamento: 'Recursos Humanos', inicio: '22/09/2026 14:10:05', fim: '22/09/2026 14:15:30', status: 'Parado' },
+        { id: 8, nome: 'Análise de desempenho', departamento: 'Recursos Humanos', inicio: '22/09/2026 15:30:45', fim: '22/09/2026 15:35:20', status: 'Concluído' },
+        { id: 9, nome: 'Reunião de planejamento', departamento: 'Gestão', inicio: '22/09/2026 16:00:00', fim: '22/09/2026 16:30:00', status: 'Concluído' },
+        { id: 10, nome: 'Auditoria interna', departamento: 'Auditoria', inicio: '22/09/2026 17:15:30', fim: '22/09/2026 17:20:45', status: 'Erro' },
 
     ];
 

@@ -18,7 +18,11 @@
     "build:realtime": "npm --workspace=@cronos/realtime run build",
     "build:web": "npm --workspace=@cronos/web run build",
     "start": "npm --workspace=@cronos/server run start",
-    "start:realtime": "npm --workspace=@cronos/realtime run start"
+    "start:realtime": "npm --workspace=@cronos/realtime run start",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "docker:reset": "docker compose down -v && docker compose up -d",
+    "docker:logs": "docker compose logs -f"
   },
   "devDependencies": {
     "concurrently": "^9.1.2",
