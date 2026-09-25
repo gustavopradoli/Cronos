@@ -1,0 +1,13 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "Cronos Postgres",
+      "Group": "Servers",
+      "Host": "postgres",
+      "Port": 5432,
+      "MaintenanceDB": "cronos",
+      "Username": "postgres",
+      "SSLMode": "prefer"
+    }
+  }
+}

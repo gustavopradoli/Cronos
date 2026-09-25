@@ -96,8 +96,10 @@ const navItems: NavItem[] = [
         label: 'Automações',
         Icon: IconAutomation,
         children: [
-            { id: 'automation-tests', label: 'Orquestrações' },
-            { id: 'automation-history', label: 'Histórico de execuções' },
+            { id: 'automation-cadastro', label: 'Cadastro de Automações' },
+            { id: 'automation-trigger', label: 'Gatilhos' },
+            { id: 'automation-machines', label: 'Cadastro de Máquinas' },
+            { id: 'automation-history', label: 'Histórico' },
         ],
     },
     {
@@ -145,18 +147,35 @@ export default function Sidebar({
     onToggleCollapse,
 }: SidebarProps) {
     const [mobileOpen, setMobileOpen] = useState(false);
-    const [expandedMenus, setExpandedMenus] = useState<string[]>([]);
+    const [expandedMenus, setExpandedMenus] = useState<string[]>(['automations']);
 
     const handleNav = (id: string) => {
         onNavigate?.(id);
         setMobileOpen(false);
+
+        if (id === 'dashboard') {
+            window.history.pushState({}, '', '/');
+            window.dispatchEvent(new PopStateEvent('popstate'));
+        }
     };
 
     const handleSubmenuNav = (id: string) => {
         handleNav(id);
 
-        if (id === 'automation-tests') {
-            window.history.pushState({}, '', '/orquestrador');
+        if (id === 'automation-cadastro' || id === 'automation-tests') {
+            window.history.pushState({}, '', '/automacoes');
+            window.dispatchEvent(new PopStateEvent('popstate'));
+        }
+        if (id === 'automation-trigger') {
+            window.history.pushState({}, '', '/gatilhos');
+            window.dispatchEvent(new PopStateEvent('popstate'));
+        }
+        if (id === 'automation-machines') {
+            window.history.pushState({}, '', '/maquinas');
+            window.dispatchEvent(new PopStateEvent('popstate'));
+        }
+        if (id === 'automation-history') {
+            window.history.pushState({}, '', '/historico');
             window.dispatchEvent(new PopStateEvent('popstate'));
         }
     };
