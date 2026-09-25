@@ -12,12 +12,14 @@
     "@cronos/shared": "*",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "pg": "^8.23.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/node": "^22.13.9",
+    "@types/pg": "^8.23.1",
     "tsx": "^4.19.3",
     "typescript": "^6.0.3"
   }
