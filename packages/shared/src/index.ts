@@ -79,3 +79,30 @@ export interface Historico {
   tipo: TipoDisparoHistorico;
   criado_em: string;
 }
+
+// -----------------------------------------------------------------------------
+// Usuários e Autenticação
+// -----------------------------------------------------------------------------
+
+export interface Usuario {
+  id: number;
+  nome: string;
+  email: string;
+  ativo: boolean;
+  ultimo_login?: string | null;
+  data_criacao: string;
+  data_atualizacao: string;
+}
+
+export interface AuthUser {
+  id: number;
+  nome: string;
+  email: string;
+  ativo: boolean;
+}
+
+export interface AuthResponseData {
+  user: AuthUser;
+  token: string;
+}
+

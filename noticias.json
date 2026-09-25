@@ -1,102 +1,102 @@
 [
   {
-    "titulo": "Claude discovers a novel enzyme system with CRISPR-like repeats",
-    "link": "https://www.anthropic.com/news/claude-discovers-novel-enzyme-system",
+    "titulo": "F-Droid 2.0",
+    "link": "https://f-droid.org/2026/09/24/f-droid-2.0-a-new-chapter-for-android-freedom.html",
     "resumo": ""
   },
   {
-    "titulo": "Linux support is coming to Snapdragon X2 Series",
-    "link": "https://www.qualcomm.com/news/onq/2026/09/snapdragon-summit-agentic-ai-pcs-linux",
+    "titulo": "Show HN: Make cursed fonts like Times New Bastard",
+    "link": "https://bastardica.mitpit.com/",
     "resumo": ""
   },
   {
-    "titulo": "VSCode's SSH Agent Is Bananas (2025)",
-    "link": "https://fly.io/blog/vscode-ssh-wtf/",
+    "titulo": "Show HN: Whiteboard (YC W26) – An open-source IDE for thoughtful software design",
+    "link": "https://github.com/devdotfast/whiteboard",
     "resumo": ""
   },
   {
-    "titulo": "Fixing the Portobello Police Station Clock",
-    "link": "https://pointinthecloud.com/2026-04-11-211700.html",
+    "titulo": "Why is the liver so weirdly regenerative?",
+    "link": "https://dynomight.substack.com/p/liver",
     "resumo": ""
   },
   {
-    "titulo": "We just shipped support for the ugliest part of HTTP: Vary – Cloudflare Blog",
-    "link": "https://blog.cloudflare.com/vary-support/",
+    "titulo": "Fearless SIMD v1.0",
+    "link": "https://linebender.org/blog/fearless-simd-1-0/",
     "resumo": ""
   },
   {
-    "titulo": "LensVLM: Compressing long context as images, expanding only relevant pages",
-    "link": "https://huggingface.co/apple/LensVLM-9B",
+    "titulo": "2DWillNeverDie",
+    "link": "https://2dwillneverdie.com/",
     "resumo": ""
   },
   {
-    "titulo": "Italian parliament votes for return to nuclear energy",
-    "link": "https://apnews.com/article/italy-nuclear-chernobyl-4891b6b7c7791ae84db6b0bf0f7cf567",
+    "titulo": "Rails World 2026 Opening Keynote [video]",
+    "link": "https://www.youtube.com/watch?v=vDjW_dRyKXY",
     "resumo": ""
   },
   {
-    "titulo": "The mystery animal on an ancient god's head",
-    "link": "https://signoregalilei.com/2026/09/13/the-mystery-animal-on-an-ancient-gods-head/",
+    "titulo": "My weird new hobby: Wandering around Tokyo on Google Maps",
+    "link": "https://ahmedhossamdev.com/writing/my-weird-new-hobby-wandering-around-tokyo/",
     "resumo": ""
   },
   {
-    "titulo": "A brief history of Windows scroll bar shortcuts",
-    "link": "https://devblogs.microsoft.com/oldnewthing/20260922-00/?p=112719/",
+    "titulo": "Toyota is taking the Corolla electric",
+    "link": "https://electrek.co/2026/09/23/toyota-best-selling-corolla-electric/",
     "resumo": ""
   },
   {
-    "titulo": "The Curious Power of Punctuation",
-    "link": "https://www.newyorker.com/magazine/2026/09/28/on-the-mark-louis-menand-book-review",
+    "titulo": "Using LLMs to trace alchemical knowledge and decode 17th century letters",
+    "link": "https://resobscura.substack.com/p/ai-labs-need-to-start-funding-historical",
     "resumo": ""
   },
   {
-    "titulo": "Mercury 2.5 LLM hits 770 tokens per second",
-    "link": "https://artificialanalysis.ai/models/mercury-2-5",
+    "titulo": "Back and shoulder surgery is often worse than useless",
+    "link": "https://www.economist.com/leaders/2026/09/24/back-and-shoulder-surgery-is-often-worse-than-useless",
     "resumo": ""
   },
   {
-    "titulo": "Jev in 25 Lines of Python",
-    "link": "https://www.nobodywho.ai/posts/jev-in-25-lines/",
+    "titulo": "Show HN: Koi.rest – watch some fish and regain your balance",
+    "link": "https://koi.rest/",
     "resumo": ""
   },
   {
-    "titulo": "Gemini 3.8 text-to-speech",
-    "link": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-text-to-speech/",
+    "titulo": "Google’s Project Suncatcher to put ML infrastructure in space",
+    "link": "https://blog.google/innovation-and-ai/models-and-research/google-research/google-project-suncatcher-facts/",
     "resumo": ""
   },
   {
-    "titulo": "Radicle: Disclosure of Vulnerability in the Network Protocol",
-    "link": "https://radicle.dev/2026/09/23/disclosure-of-vulnerability-in-network-protocol",
+    "titulo": "California is chasing wealth that has feet",
+    "link": "https://blog.landeconomics.org/p/california-is-chasing-wealth-that",
     "resumo": ""
   },
   {
-    "titulo": "Tokens too cheap to meter",
-    "link": "https://jyn.dev/tokens-too-cheap-to-meter/",
+    "titulo": "Two-tier encryption in the UK",
+    "link": "https://macanorak.com/two-tier-encryption-in-the-uk/",
     "resumo": ""
   },
   {
-    "titulo": "Show HN: An atlas of system designs with interactive architecture diagrams",
-    "link": "https://atlas-sysdes.vercel.app/",
+    "titulo": "Book review: Is parallel programming hard, and, if so, what can you do about it?",
+    "link": "https://ahelwer.ca/post/2026-09-21-concurrency-textbook/",
     "resumo": ""
   },
   {
-    "titulo": "Making Tailscale Faster",
-    "link": "https://tailscale.com/blog/making-tailscale-faster",
+    "titulo": "The Board Game of the Alpha Nerds (2014)",
+    "link": "https://grantland.com/features/diplomacy-the-board-game-of-the-alpha-nerds/",
     "resumo": ""
   },
   {
-    "titulo": "Swap, ZRAM, Zswap and Hibernate on NixOS",
-    "link": "https://blog.matthewbrunelle.com/swap-zram-zswap-and-hibernate-on-nixos/",
+    "titulo": "Sourcehut account takeover via build logs (XSS in ansi2html)",
+    "link": "https://blog.arusekk.pl/posts/srht-account-takeover/",
     "resumo": ""
   },
   {
-    "titulo": "I don't want the details",
-    "link": "https://michaelheap.com/i-dont-want-the-details/",
+    "titulo": "Stable (YC W20) Is Hiring Product Engineers",
+    "link": "https://www.usestable.com/careers/product-engineer",
     "resumo": ""
   },
   {
-    "titulo": "Stripe's Knowledge AI Platform",
-    "link": "https://stripe.dev/blog/meet-stripes-knowledge-ai-platform",
+    "titulo": "GitLab Outage",
+    "link": "https://status.gitlab.com/",
     "resumo": ""
   }
 ]

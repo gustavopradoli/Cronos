@@ -1,6 +1,7 @@
 import { useState, useMemo, useRef } from 'react';
-
+import { resetPasswordApi } from '../services/api';
 import './RecoverPassword.css';
+
 
   
 
@@ -150,11 +151,7 @@ export default function RecoverPassword({ onBackToLogin }: { onBackToLogin?: () 
   
 
       // SIMULAÇÃO DE BANCO DE DADOS (Mock)
-      const mockDatabaseEmail = "testecronos@gmail.com";
-      if (identity !== mockDatabaseEmail) {
-        showToast("E-mail não cadastrado.", "error");
-        return;
-      }
+      showToast("E-mail confirmado. Redefina sua senha abaixo.", "success");
 
       showToast("Instruções de Recuperação Enviadas ao E-mail Informado", "success");
       setPhase(3); // Pula direto para a fase 3 para o teste
@@ -328,15 +325,18 @@ export default function RecoverPassword({ onBackToLogin }: { onBackToLogin?: () 
 
     setIsLoading(true);
 
-    setTimeout(() => {
-
-      setIsLoading(false);
-
-      showToast("Senha alterada com sucesso!", "success");
-
-      if (onBackToLogin) onBackToLogin();
-
-    }, 1500);
+    resetPasswordApi(identity, newPassword)
+      .then(() => {
+        setIsLoading(false);
+        showToast("Senha alterada com sucesso no banco de dados!", "success");
+        setTimeout(() => {
+          if (onBackToLogin) onBackToLogin();
+        }, 1200);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        showToast(err.message || "Erro ao alterar senha.", "error");
+      });
 
   };
 

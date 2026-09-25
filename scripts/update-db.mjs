@@ -32,10 +32,15 @@ async function updateDatabase() {
 
     console.log('[DB Sync] Banco de dados atualizado com sucesso!');
   } catch (error) {
-    console.error('[DB Sync] Erro ao sincronizar o banco de dados:', error.message);
+    const errorDetails = error.message || error.code || String(error);
+    console.error('[DB Sync] Erro ao sincronizar o banco de dados:', errorDetails);
+    if (error.code === 'ECONNREFUSED' || errorDetails.includes('ECONNREFUSED')) {
+      console.error('[DB Sync] Não foi possível conectar ao PostgreSQL na porta 5433.');
+      console.error('[DB Sync] Certifique-se de que o Docker Desktop está aberto e execute "npm run docker:up".');
+    }
     process.exit(1);
   } finally {
-    await client.end().catch(() => {});
+    await client.end().catch(() => { });
   }
 }
 

@@ -79,6 +79,17 @@ async function seed() {
     } else {
       console.log('[Seed] Automações já existentes no banco.');
     }
+
+    // 3. Cadastrar usuário padrão administrador
+    const defaultEmail = process.env.DEFAULT_ADMIN_EMAIL || 'admin@cronos.com';
+    const defaultPassword = process.env.DEFAULT_ADMIN_PASSWORD || 'admin123';
+    await client.query(
+      `INSERT INTO usuarios (nome, email, senha_hash, ativo)
+       VALUES ('Administrador Cronos', $1, crypt($2, gen_salt('bf', 10)), TRUE)
+       ON CONFLICT (email) DO NOTHING`,
+      [defaultEmail, defaultPassword]
+    );
+    console.log(`[Seed] Usuário padrão garantido: ${defaultEmail} (senha: ${defaultPassword})`);
   } catch (err) {
     console.error('[Seed] Erro ao popular dados:', err);
   } finally {

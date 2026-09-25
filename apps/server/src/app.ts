@@ -7,6 +7,8 @@ import maquinasRouter from './routes/maquinas';
 import gatilhosRouter from './routes/gatilhos';
 import historicoRouter from './routes/historico';
 import execucoesRouter from './routes/execucoes';
+import authRouter from './routes/auth';
+import { authMiddleware } from './middlewares/auth';
 
 export function createApp() {
   const app = express();
@@ -26,12 +28,15 @@ export function createApp() {
     res.json(response);
   });
 
-  // Endpoints da API REST
-  app.use('/api/automacoes', automacoesRouter);
-  app.use('/api/maquinas', maquinasRouter);
-  app.use('/api/gatilhos', gatilhosRouter);
-  app.use('/api/historico', historicoRouter);
-  app.use('/api/execucoes', execucoesRouter);
+  // Rotas de autenticação (públicas)
+  app.use('/api/auth', authRouter);
+
+  // Endpoints da API REST protegidos por autenticação
+  app.use('/api/automacoes', authMiddleware, automacoesRouter);
+  app.use('/api/maquinas', authMiddleware, maquinasRouter);
+  app.use('/api/gatilhos', authMiddleware, gatilhosRouter);
+  app.use('/api/historico', authMiddleware, historicoRouter);
+  app.use('/api/execucoes', authMiddleware, execucoesRouter);
 
   return app;
 }

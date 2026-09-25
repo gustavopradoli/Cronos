@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import type { ReactNode } from 'react';
+import { useAuth } from '../../contexts/AuthContext';
 import './Sidebar.css';
+
 
 /* ─── Inline SVG icons (no external deps) ─── */
 
@@ -75,6 +77,17 @@ function IconMenu() {
     );
 }
 
+function IconLogout() {
+    return (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>
+    );
+}
+
+
 /* ─── Nav items config with submenus ─── */
 
 interface SubmenuItem {
@@ -146,15 +159,17 @@ export default function Sidebar({
     collapsed = false,
     onToggleCollapse,
 }: SidebarProps) {
+    const { user, logout } = useAuth();
     const [mobileOpen, setMobileOpen] = useState(false);
     const [expandedMenus, setExpandedMenus] = useState<string[]>(['automations']);
+
 
     const handleNav = (id: string) => {
         onNavigate?.(id);
         setMobileOpen(false);
 
         if (id === 'dashboard') {
-            window.history.pushState({}, '', '/');
+            window.history.pushState({}, '', '/dashboard');
             window.dispatchEvent(new PopStateEvent('popstate'));
         }
     };
@@ -264,7 +279,29 @@ export default function Sidebar({
                     })}
                 </nav>
 
+                {/* Usuário autenticado e Logout */}
+                <div className="sidebar-user-card">
+                    <div className="sidebar-user-avatar" title={user?.email || 'Usuário'}>
+                        {user?.nome ? user.nome.charAt(0).toUpperCase() : 'U'}
+                    </div>
+                    {!collapsed && (
+                        <div className="sidebar-user-info">
+                            <span className="sidebar-user-name" title={user?.nome}>{user?.nome || 'Usuário'}</span>
+                            <span className="sidebar-user-email" title={user?.email}>{user?.email || ''}</span>
+                        </div>
+                    )}
+                    <button
+                        className="sidebar-logout-btn"
+                        onClick={logout}
+                        title="Sair do sistema"
+                        aria-label="Sair do sistema"
+                    >
+                        <IconLogout />
+                    </button>
+                </div>
+
                 {/* Botão de recolher/expandir integrado dentro do menu */}
+
                 <div className="sidebar-collapse-wrapper">
                     <button
                         className="sidebar-collapse-button"

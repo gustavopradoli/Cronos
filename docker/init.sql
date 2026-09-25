@@ -146,3 +146,44 @@ CREATE INDEX IF NOT EXISTS idx_historico_automacao_id ON historico(automacao_id)
 CREATE INDEX IF NOT EXISTS idx_historico_maquina_id ON historico(maquina_id);
 CREATE INDEX IF NOT EXISTS idx_historico_status ON historico(status);
 CREATE INDEX IF NOT EXISTS idx_historico_data_inicio ON historico(data_inicio DESC);
+
+-- -----------------------------------------------------------------------------
+-- 5. TABELA: usuarios
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS usuarios (
+    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    nome VARCHAR(150) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    senha_hash VARCHAR(255) NOT NULL,
+    ativo BOOLEAN NOT NULL DEFAULT TRUE,
+    ultimo_login TIMESTAMPTZ,
+    data_criacao TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    data_atualizacao TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE OR REPLACE TRIGGER trg_usuarios_updated_at
+BEFORE UPDATE ON usuarios
+FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+
+COMMENT ON TABLE usuarios IS 'Armazena os usuários de acesso ao sistema Cronos';
+COMMENT ON COLUMN usuarios.id IS 'Identificador único do usuário (PK)';
+COMMENT ON COLUMN usuarios.nome IS 'Nome completo ou de exibição do usuário';
+COMMENT ON COLUMN usuarios.email IS 'E-mail único utilizado para autenticação';
+COMMENT ON COLUMN usuarios.senha_hash IS 'Hash seguro da senha do usuário gerado com bcrypt';
+COMMENT ON COLUMN usuarios.ativo IS 'Indica se a conta do usuário está ativa';
+COMMENT ON COLUMN usuarios.ultimo_login IS 'Registro do último acesso efetuado pelo usuário';
+
+-- Índices para usuarios
+CREATE INDEX IF NOT EXISTS idx_usuarios_email ON usuarios(email);
+CREATE INDEX IF NOT EXISTS idx_usuarios_ativo ON usuarios(ativo);
+
+-- Usuário Administrador Padrão (Senha padrão: admin123)
+INSERT INTO usuarios (nome, email, senha_hash, ativo)
+VALUES (
+    'Administrador Cronos',
+    'admin@cronos.com',
+    crypt('admin123', gen_salt('bf', 10)),
+    TRUE
+)
+ON CONFLICT (email) DO NOTHING;
+
