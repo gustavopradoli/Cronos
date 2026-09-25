@@ -18,11 +18,17 @@
 
 .orchestrator-hero h1 {
     max-width: 760px;
+    font-family: var(--font-heading, 'Space Grotesk', sans-serif);
     font-size: clamp(28px, 3vw, 40px);
+    font-weight: 700;
+    color: var(--color-ink, #1e1b4b);
+    line-height: 1.1;
+    margin: 4px 0 8px;
 }
 
 .orchestrator-hero .intro {
     font-size: 13px;
+    color: var(--color-muted, #716b80);
 }
 
 .hero-actions,
@@ -34,38 +40,60 @@
 
 button,
 input,
-select {
-    font: inherit;
+select,
+textarea {
+    font-family: var(--font-body, 'DM Sans', sans-serif);
 }
 
 button {
-    min-height: 40px;
     border: 0;
     border-radius: 8px;
     cursor: pointer;
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 600;
+    transition: all 0.15s ease;
+}
+
+.hero-actions button,
+.modal-actions button {
+    min-height: 40px;
 }
 
 .primary-button {
+    min-height: 40px;
     padding: 0 18px;
-    color: var(--color-white);
-    background: var(--color-primary);
-    box-shadow: 0 10px 24px #5b21b626;
+    color: #ffffff !important;
+    background: var(--color-primary, #5b21b6);
+    box-shadow: 0 4px 14px rgba(91, 33, 182, 0.22);
+    font-weight: 700;
+}
+
+.primary-button:hover:not(:disabled) {
+    background: var(--color-primary-hover, #4c1d95);
+    color: #ffffff !important;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(91, 33, 182, 0.32);
 }
 
 .ghost-button {
+    min-height: 40px;
     padding: 0 16px;
-    color: var(--color-primary);
+    color: var(--color-primary, #5b21b6);
     background: #ffffff;
-    border: 1px solid var(--color-line);
+    border: 1px solid var(--color-line, #dfe3ec);
+}
+
+.ghost-button:hover:not(:disabled) {
+    background: #f5f3ff;
+    border-color: var(--color-primary-light, #7c3aed);
+    color: var(--color-primary, #5b21b6);
 }
 
 .workspace-panel,
 .confirmation-modal {
-    background: var(--color-white);
-    border: 1px solid var(--color-line);
-    border-radius: 8px;
+    background: #ffffff;
+    border: 1px solid var(--color-line, #dfe3ec);
+    border-radius: 12px;
 }
 
 .search-field span,
@@ -359,23 +387,67 @@ button {
     display: grid;
     place-items: center;
     padding: 20px;
-    background: #1e1b4bcc;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(5px);
+    z-index: 1000;
 }
 
 .confirmation-modal {
-    width: min(100%, 460px);
-    padding: 24px;
-    box-shadow: 0 24px 80px #00000040;
+    width: min(100%, 520px);
+    padding: 28px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    box-shadow: 0 24px 70px rgba(15, 23, 42, 0.28);
+    color: var(--color-ink, #1e1b4b);
+    animation: modalPopIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes modalPopIn {
+    from {
+        opacity: 0;
+        transform: scale(0.96) translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
 
 .confirmation-modal h2 {
-    margin: 14px 0 8px;
-    font-size: 22px;
+    margin: 0 0 8px;
+    font-family: var(--font-heading, 'Space Grotesk', sans-serif);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--color-ink, #1e1b4b);
 }
 
 .confirmation-modal p {
-    color: var(--color-muted);
+    color: var(--color-muted, #716b80);
     font-size: 13px;
+    line-height: 1.5;
+    margin: 0 0 16px;
+}
+
+.confirmation-modal input[type="text"],
+.confirmation-modal input[type="search"],
+.confirmation-modal select,
+.confirmation-modal textarea {
+    background: #ffffff;
+    border: 1px solid var(--color-line, #dfe3ec);
+    border-radius: 8px;
+    color: var(--color-ink, #1e1b4b);
+    font-family: var(--font-body, 'DM Sans', sans-serif);
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.confirmation-modal input:focus,
+.confirmation-modal select:focus,
+.confirmation-modal textarea:focus {
+    border-color: var(--color-primary, #5b21b6);
+    box-shadow: 0 0 0 3px rgba(91, 33, 182, 0.12);
 }
 
 .modal-actions {

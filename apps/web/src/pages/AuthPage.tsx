@@ -1,4 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { BrandMark } from '../components/BrandMark';
 import { useAuth } from '../contexts/AuthContext';
 import RecoverPassword from './RecoverPassword';
@@ -270,7 +272,7 @@ export default function AuthPage({ onAuthenticated }: AuthPageProps) {
               {authError && <p className="auth-error" role="alert">{authError}</p>}
               <button className="submit-button" type="submit" disabled={isSubmitting}>
                 {isSubmitting ? 'Acessando...' : isSignUp ? 'Cadastrar' : 'Entrar no Cronos'}
-                <span aria-hidden="true">→</span>
+                <FontAwesomeIcon icon={faArrowRight} style={{ fontSize: '14px', color: 'var(--color-accent)' }} />
               </button>
             </form>
 
