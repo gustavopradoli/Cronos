@@ -28,5 +28,9 @@
   "devDependencies": {
     "concurrently": "^9.1.2",
     "typescript": "^6.0.3"
+  },
+  "overrides": {
+    "rollup": "npm:@rollup/wasm-node@^4.63.3",
+    "esbuild": "npm:esbuild-wasm@^0.25.0"
   }
 }
