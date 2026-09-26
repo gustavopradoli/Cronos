@@ -15,6 +15,8 @@ import {
   faCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { apiRequest } from '../services/api';
+import { confirmAction, showError, showWarning, showToast } from '../utils/dialogs';
+import cronosLogo from '../assets/cronos-logo.png';
 import './orchestrator.css';
 
 interface MaquinaComStatus extends Maquina {
@@ -78,7 +80,7 @@ export default function Maquinas() {
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!nome.trim()) {
-      alert('Informe o nome da máquina.');
+      showWarning('Campo obrigatório', 'Informe o nome da máquina.');
       return;
     }
 
@@ -100,19 +102,20 @@ export default function Maquinas() {
       setModalOpen(false);
       loadData();
     } catch (err: any) {
-      alert(`Erro ao salvar máquina: ${err.message}`);
+      showError('Erro ao salvar máquina', err.message);
     } finally {
       setIsSaving(false);
     }
   };
 
   const handleRegenerateSecret = async (item: MaquinaComStatus) => {
-    if (
-      !window.confirm(
-        `Regenerar o secret da máquina "${item.nome}"? O cliente desktop precisará ser atualizado com o novo secret para conseguir conectar.`
-      )
-    )
-      return;
+    const confirmed = await confirmAction({
+      title: 'Regenerar Secret',
+      text: `Deseja realmente gerar um novo token/secret para a máquina "${item.nome}"? O cliente desktop precisará ser atualizado com o novo secret para conseguir conectar.`,
+      confirmText: 'Sim, regerar',
+      isDestructive: true,
+    });
+    if (!confirmed) return;
 
     try {
       const res = await apiRequest<Maquina>(`/maquinas/${item.id}/regenerate-secret`, { method: 'POST' });
@@ -122,18 +125,25 @@ export default function Maquinas() {
       setTimeout(() => setCopiedId(null), 3000);
       loadData();
     } catch (err: any) {
-      alert(`Erro: ${err.message}`);
+      showError('Erro ao regerar secret', err.message);
     }
   };
 
   const handleDelete = async (item: MaquinaComStatus) => {
-    if (!window.confirm(`Deseja remover o cadastro da máquina "${item.nome}"?`)) return;
+    const confirmed = await confirmAction({
+      title: 'Remover Máquina',
+      text: `Deseja remover o cadastro da máquina "${item.nome}"?`,
+      confirmText: 'Sim, remover',
+      isDestructive: true,
+    });
+    if (!confirmed) return;
+
     try {
       await apiRequest(`/maquinas/${item.id}`, { method: 'DELETE' });
       setSuccessMsg(`Máquina "${item.nome}" removida.`);
       loadData();
     } catch (err: any) {
-      alert(`Erro ao excluir: ${err.message}`);
+      showError('Erro ao excluir máquina', err.message);
     }
   };
 
@@ -145,7 +155,7 @@ export default function Maquinas() {
       });
       loadData();
     } catch (err: any) {
-      alert(`Erro: ${err.message}`);
+      showError('Erro ao alterar status', err.message);
     }
   };
 
@@ -231,7 +241,7 @@ export default function Maquinas() {
             <div className="automation-table-scroll">
               <div
                 className="automation-head"
-                style={{ gridTemplateColumns: '100px 1.5fr 2.5fr 120px 1.3fr 90px 140px' }}
+                style={{ gridTemplateColumns: '125px 1.5fr 2.3fr 120px 1.3fr 90px 140px' }}
               >
                 <span>Conexão</span>
                 <span>Nome / Hostname</span>
@@ -252,20 +262,41 @@ export default function Maquinas() {
                     className="automation-entry"
                     style={{
                       display: 'grid',
-                      gridTemplateColumns: '100px 1.5fr 2.5fr 120px 1.3fr 90px 140px',
+                      gridTemplateColumns: '125px 1.5fr 2.3fr 120px 1.3fr 90px 140px',
                       padding: '12px 10px',
                       alignItems: 'center',
                       gap: '8px',
                       borderTop: '1px solid var(--color-line)',
                     }}
                   >
-                    <div>
+                    <div className="machine-status-cell">
+                      <div
+                        className={`machine-brand-avatar ${m.is_online ? 'online' : 'offline'}`}
+                        title={
+                          !m.ativo
+                            ? `Cronos Runner ${m.is_online ? 'Online' : 'Offline'} (Máquina Inativa)`
+                            : m.is_online
+                            ? 'Cronos Runner Conectado (Online)'
+                            : 'Cronos Runner Desconectado (Offline)'
+                        }
+                      >
+                        <img src={cronosLogo} alt="Cronos" />
+                        <span className={`machine-status-dot ${m.is_online ? 'online' : 'offline'}`} />
+                      </div>
+
                       {m.is_online ? (
                         <span
                           className="status-pill completed"
-                          style={{ fontSize: '11px', display: 'inline-flex', gap: '6px', alignItems: 'center' }}
+                          style={{
+                            fontSize: '11px',
+                            display: 'inline-flex',
+                            gap: '5px',
+                            alignItems: 'center',
+                            padding: '0 8px',
+                            minHeight: '24px',
+                          }}
                         >
-                          <FontAwesomeIcon icon={faCircle} style={{ fontSize: '7px', color: '#22c55e' }} />
+                          <FontAwesomeIcon icon={faCircle} style={{ fontSize: '6px', color: '#22c55e' }} />
                           <span>Online</span>
                         </span>
                       ) : (
@@ -276,11 +307,13 @@ export default function Maquinas() {
                             background: '#f1f5f9',
                             color: '#64748b',
                             display: 'inline-flex',
-                            gap: '6px',
+                            gap: '5px',
                             alignItems: 'center',
+                            padding: '0 8px',
+                            minHeight: '24px',
                           }}
                         >
-                          <FontAwesomeIcon icon={faCircle} style={{ fontSize: '7px', color: '#94a3b8' }} />
+                          <FontAwesomeIcon icon={faCircle} style={{ fontSize: '6px', color: '#94a3b8' }} />
                           <span>Offline</span>
                         </span>
                       )}
@@ -467,7 +500,7 @@ export default function Maquinas() {
                     style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
                     onClick={() => {
                       navigator.clipboard.writeText(secret);
-                      alert('Secret copiado para a área de transferência!');
+                      showToast('Secret copiado para a área de transferência!');
                     }}
                   >
                     <FontAwesomeIcon icon={faCopy} />

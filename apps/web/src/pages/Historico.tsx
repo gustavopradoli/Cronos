@@ -27,6 +27,7 @@ import {
   faCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { apiRequest } from '../services/api';
+import { confirmAction, showError } from '../utils/dialogs';
 import './Historico.css';
 
 interface HistoricoItemCompleto {
@@ -217,7 +218,13 @@ export default function Historico() {
 
   // Parada forçada da execução
   const handleStopExecution = async (item: HistoricoItemCompleto) => {
-    if (!window.confirm(`Deseja interromper forçadamente a execução #${item.id} de "${item.automacao_nome}"?`)) {
+    const confirmed = await confirmAction({
+      title: 'Interromper Execução',
+      text: `Deseja interromper forçadamente a execução #${item.id} de "${item.automacao_nome}"?`,
+      confirmText: 'Sim, interromper',
+      isDestructive: true,
+    });
+    if (!confirmed) {
       return;
     }
 
@@ -238,7 +245,7 @@ export default function Historico() {
       );
       setTimeout(() => setFeedbackMsg(''), 4000);
     } catch (err: any) {
-      alert(`Erro ao interromper execução: ${err.message}`);
+      showError('Erro ao interromper execução', err.message);
     } finally {
       setStoppingId(null);
     }

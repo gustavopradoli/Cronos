@@ -11,6 +11,7 @@ import {
   faSearch,
 } from '@fortawesome/free-solid-svg-icons';
 import { apiRequest } from '../services/api';
+import { confirmAction, showError, showWarning } from '../utils/dialogs';
 import './orchestrator.css';
 
 interface MaquinaComStatus extends Maquina {
@@ -109,7 +110,7 @@ export function OrchestratorScreen() {
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formNome.trim() || !formCaminhoExe.trim() || !formDepartamento.trim()) {
-      alert('Por favor, preencha o Nome, Caminho do Executável e o Departamento.');
+      showWarning('Campos obrigatórios', 'Por favor, preencha o Nome, Caminho do Executável e o Departamento.');
       return;
     }
 
@@ -143,20 +144,27 @@ export function OrchestratorScreen() {
       setModalOpen(false);
       loadData();
     } catch (err: any) {
-      alert(`Erro ao salvar: ${err.message}`);
+      showError('Erro ao salvar automação', err.message);
     } finally {
       setIsSaving(false);
     }
   };
 
   const handleDelete = async (auto: Automacao) => {
-    if (!window.confirm(`Tem certeza que deseja excluir a automação "${auto.nome}"?`)) return;
+    const confirmed = await confirmAction({
+      title: 'Excluir Automação',
+      text: `Tem certeza que deseja excluir a automação "${auto.nome}"?`,
+      confirmText: 'Sim, excluir',
+      isDestructive: true,
+    });
+    if (!confirmed) return;
+
     try {
       await apiRequest(`/automacoes/${auto.id}`, { method: 'DELETE' });
       setSuccessMsg(`Automação "${auto.nome}" removida.`);
       loadData();
     } catch (err: any) {
-      alert(`Erro ao remover: ${err.message}`);
+      showError('Erro ao remover automação', err.message);
     }
   };
 
@@ -168,7 +176,7 @@ export function OrchestratorScreen() {
       });
       loadData();
     } catch (err: any) {
-      alert(`Erro: ${err.message}`);
+      showError('Erro ao alterar status', err.message);
     }
   };
 
@@ -195,7 +203,7 @@ export function OrchestratorScreen() {
       );
       setDisparoModalOpen(false);
     } catch (err: any) {
-      alert(`Erro ao disparar: ${err.message}`);
+      showError('Erro ao disparar automação', err.message);
     } finally {
       setIsDisparando(false);
     }

@@ -84,10 +84,14 @@ export interface Historico {
 // Usuários e Autenticação
 // -----------------------------------------------------------------------------
 
+export type UserRole = 'admin' | 'operador';
+
 export interface Usuario {
   id: number;
   nome: string;
   email: string;
+  role: UserRole;
+  pode_cadastrar_usuarios: boolean;
   ativo: boolean;
   ultimo_login?: string | null;
   data_criacao: string;
@@ -98,6 +102,8 @@ export interface AuthUser {
   id: number;
   nome: string;
   email: string;
+  role: UserRole;
+  pode_cadastrar_usuarios: boolean;
   ativo: boolean;
 }
 

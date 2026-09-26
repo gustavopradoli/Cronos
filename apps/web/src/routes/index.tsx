@@ -7,6 +7,7 @@ import { OrchestratorScreen } from '../pages/OrchestratorScreen';
 import Gatilhos from '../pages/Gatilhos';
 import Maquinas from '../pages/Maquinas';
 import Historico from '../pages/Historico';
+import Usuarios from '../pages/Usuarios';
 import { BrandMark } from '../components/BrandMark';
 import '../styles/theme.css';
 
@@ -88,6 +89,14 @@ function AppRouter() {
     return (
       <Layout activeItem="automation-history">
         <Historico />
+      </Layout>
+    );
+  }
+
+  if (pathname === '/usuarios' || pathname === '/acessos') {
+    return (
+      <Layout activeItem="settings-access">
+        <Usuarios />
       </Layout>
     );
   }

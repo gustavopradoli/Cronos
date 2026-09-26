@@ -2,8 +2,8 @@ import { Router, Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { query } from '../db';
-import { authMiddleware, AuthenticatedRequest } from '../middlewares/auth';
-import type { ApiResponse, AuthResponseData, Usuario } from '@cronos/shared';
+import { authMiddleware, canManageUsersMiddleware, AuthenticatedRequest } from '../middlewares/auth';
+import type { ApiResponse, AuthResponseData, Usuario, UserRole } from '@cronos/shared';
 
 const router = Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'cronos_jwt_secret_dev_key_2026';
@@ -14,10 +14,10 @@ function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-// POST /api/auth/register - Cadastro de novo usuário
-router.post('/register', async (req: Request, res: Response) => {
+// POST /api/auth/register - Cadastro de novo usuário (RESTRITO a administradores ou autorizados)
+router.post('/register', authMiddleware, canManageUsersMiddleware, async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const { email, password, nome } = req.body;
+    const { email, password, nome, role = 'operador', pode_cadastrar_usuarios = false } = req.body;
 
     if (!email || typeof email !== 'string') {
       return res.status(400).json({ success: false, error: 'O e-mail é obrigatório.' });
@@ -45,6 +45,10 @@ router.post('/register', async (req: Request, res: Response) => {
       });
     }
 
+    // Validação de role
+    const assignedRole: UserRole = role === 'admin' ? 'admin' : 'operador';
+    const canManage = assignedRole === 'admin' ? true : Boolean(pode_cadastrar_usuarios);
+
     // Nome padrão baseado no e-mail se não fornecido
     const displayName =
       nome && typeof nome === 'string' && nome.trim().length > 0
@@ -57,34 +61,17 @@ router.post('/register', async (req: Request, res: Response) => {
 
     // Insere o novo usuário no PostgreSQL
     const insertResult = await query<Usuario>(
-      `INSERT INTO usuarios (nome, email, senha_hash, ativo)
-       VALUES ($1, $2, $3, TRUE)
-       RETURNING id, nome, email, ativo, data_criacao, data_atualizacao`,
-      [displayName, normalizedEmail, senhaHash]
+      `INSERT INTO usuarios (nome, email, senha_hash, role, pode_cadastrar_usuarios, ativo)
+       VALUES ($1, $2, $3, $4, $5, TRUE)
+       RETURNING id, nome, email, role, pode_cadastrar_usuarios, ativo, data_criacao, data_atualizacao`,
+      [displayName, normalizedEmail, senhaHash, assignedRole, canManage]
     );
 
     const newUser = insertResult.rows[0];
 
-    // Gera token JWT
-    const token = jwt.sign(
-      { id: newUser.id, email: newUser.email, nome: newUser.nome },
-      JWT_SECRET,
-      { expiresIn: JWT_EXPIRES_IN }
-    );
-
-    const responseData: AuthResponseData = {
-      user: {
-        id: newUser.id,
-        nome: newUser.nome,
-        email: newUser.email,
-        ativo: newUser.ativo,
-      },
-      token,
-    };
-
-    const response: ApiResponse<AuthResponseData> = {
+    const response: ApiResponse<Usuario> = {
       success: true,
-      data: responseData,
+      data: newUser,
     };
 
     return res.status(201).json(response);
@@ -111,9 +98,9 @@ router.post('/login', async (req: Request, res: Response) => {
 
     const normalizedEmail = String(email).trim().toLowerCase();
 
-    // Busca usuário no banco
+    // Busca usuário no banco com perfil e permissões
     const userResult = await query(
-      `SELECT id, nome, email, senha_hash, ativo, ultimo_login
+      `SELECT id, nome, email, senha_hash, role, pode_cadastrar_usuarios, ativo, ultimo_login
        FROM usuarios
        WHERE email = $1`,
       [normalizedEmail]
@@ -131,7 +118,7 @@ router.post('/login', async (req: Request, res: Response) => {
     if (!user.ativo) {
       return res.status(403).json({
         success: false,
-        error: 'Esta conta de usuário está desativada. Entre em contato com o suporte.',
+        error: 'Esta conta de usuário está desativada. Entre em contato com um administrador.',
       });
     }
 
@@ -147,9 +134,18 @@ router.post('/login', async (req: Request, res: Response) => {
     // Atualiza data do último login
     await query('UPDATE usuarios SET ultimo_login = CURRENT_TIMESTAMP WHERE id = $1', [user.id]);
 
-    // Gera token JWT
+    const userRole: UserRole = user.role === 'admin' ? 'admin' : 'operador';
+    const canManageUsers = userRole === 'admin' || Boolean(user.pode_cadastrar_usuarios);
+
+    // Gera token JWT incluindo role e permissão
     const token = jwt.sign(
-      { id: user.id, email: user.email, nome: user.nome },
+      {
+        id: user.id,
+        email: user.email,
+        nome: user.nome,
+        role: userRole,
+        pode_cadastrar_usuarios: canManageUsers,
+      },
       JWT_SECRET,
       { expiresIn: JWT_EXPIRES_IN }
     );
@@ -159,6 +155,8 @@ router.post('/login', async (req: Request, res: Response) => {
         id: user.id,
         nome: user.nome,
         email: user.email,
+        role: userRole,
+        pode_cadastrar_usuarios: canManageUsers,
         ativo: user.ativo,
       },
       token,
@@ -183,7 +181,7 @@ router.get('/me', authMiddleware, async (req: AuthenticatedRequest, res: Respons
     const userId = req.user?.id;
 
     const userResult = await query<Usuario>(
-      `SELECT id, nome, email, ativo, ultimo_login, data_criacao, data_atualizacao
+      `SELECT id, nome, email, role, pode_cadastrar_usuarios, ativo, ultimo_login, data_criacao, data_atualizacao
        FROM usuarios
        WHERE id = $1`,
       [userId]

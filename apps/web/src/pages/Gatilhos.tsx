@@ -14,6 +14,7 @@ import {
   faChevronDown,
 } from '@fortawesome/free-solid-svg-icons';
 import { apiRequest } from '../services/api';
+import { confirmAction, showError, showWarning } from '../utils/dialogs';
 import './orchestrator.css';
 
 interface GatilhoItem {
@@ -145,7 +146,7 @@ export default function Gatilhos() {
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!automacaoId || !maquinaId || !horarioExecucao) {
-      alert('Selecione a automação, a máquina e o horário de execução.');
+      showWarning('Campos incompletos', 'Selecione a automação, a máquina e o horário de execução.');
       return;
     }
 
@@ -178,20 +179,27 @@ export default function Gatilhos() {
       setModalOpen(false);
       loadData();
     } catch (err: any) {
-      alert(`Erro ao salvar gatilho: ${err.message}`);
+      showError('Erro ao salvar gatilho', err.message);
     } finally {
       setIsSaving(false);
     }
   };
 
   const handleDelete = async (item: GatilhoItem) => {
-    if (!window.confirm(`Deseja excluir o gatilho da automação "${item.automacao_nome}"?`)) return;
+    const confirmed = await confirmAction({
+      title: 'Excluir Gatilho',
+      text: `Deseja realmente remover o agendamento da automação "${item.automacao_nome}"?`,
+      confirmText: 'Sim, excluir',
+      isDestructive: true,
+    });
+    if (!confirmed) return;
+
     try {
       await apiRequest(`/gatilhos/${item.id}`, { method: 'DELETE' });
       setSuccessMsg('Gatilho removido com sucesso.');
       loadData();
     } catch (err: any) {
-      alert(`Erro ao excluir: ${err.message}`);
+      showError('Erro ao excluir gatilho', err.message);
     }
   };
 
@@ -203,7 +211,7 @@ export default function Gatilhos() {
       });
       loadData();
     } catch (err: any) {
-      alert(`Erro: ${err.message}`);
+      showError('Erro ao alterar status', err.message);
     }
   };
 

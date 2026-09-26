@@ -521,3 +521,85 @@ button {
         padding: 12px;
     }
 }
+
+/* ─── Machine Runner Status & Brand Identity ─── */
+.machine-status-cell {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.machine-brand-avatar {
+    position: relative;
+    width: 26px;
+    height: 26px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.25s ease;
+    background: #ffffff;
+}
+
+.machine-brand-avatar.online {
+    background: #f5f3ff;
+    border: 1.5px solid #22c55e;
+    box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.15), 0 2px 5px rgba(34, 197, 94, 0.12);
+}
+
+.machine-brand-avatar.offline {
+    background: #f8fafc;
+    border: 1.5px solid #cbd5e1;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.machine-brand-avatar img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    display: block;
+    transition: filter 0.25s ease, opacity 0.25s ease;
+}
+
+.machine-brand-avatar.online img {
+    filter: drop-shadow(0 1px 2px rgba(91, 33, 182, 0.2));
+}
+
+.machine-brand-avatar.offline img {
+    filter: grayscale(100%);
+    opacity: 0.45;
+}
+
+.machine-status-dot {
+    position: absolute;
+    bottom: -1px;
+    right: -1px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    border: 1.5px solid #ffffff;
+}
+
+.machine-status-dot.online {
+    background-color: #22c55e;
+    box-shadow: 0 0 4px #22c55e;
+    animation: machineLivePulse 2s infinite ease-out;
+}
+
+.machine-status-dot.offline {
+    background-color: #94a3b8;
+}
+
+@keyframes machineLivePulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 4px rgba(34, 197, 94, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+    }
+}
+

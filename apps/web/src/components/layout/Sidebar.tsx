@@ -139,7 +139,7 @@ const navItems: NavItem[] = [
         Icon: IconSettings,
         children: [
             { id: 'settings-general', label: 'Preferências gerais' },
-            { id: 'settings-access', label: 'Acessos e permissões' },
+            { id: 'settings-access', label: 'Usuários e Permissões' },
         ],
     },
 ];
@@ -159,10 +159,20 @@ export default function Sidebar({
     collapsed = false,
     onToggleCollapse,
 }: SidebarProps) {
-    const { user, logout } = useAuth();
+    const { user, canManageUsers, logout } = useAuth();
     const [mobileOpen, setMobileOpen] = useState(false);
     const [expandedMenus, setExpandedMenus] = useState<string[]>(['automations']);
 
+    const filteredNavItems = navItems.map((item) => {
+        if (!item.children) return item;
+        const filteredChildren = item.children.filter((child) => {
+            if (child.id === 'settings-access') {
+                return canManageUsers;
+            }
+            return true;
+        });
+        return { ...item, children: filteredChildren };
+    });
 
     const handleNav = (id: string) => {
         onNavigate?.(id);
@@ -191,6 +201,10 @@ export default function Sidebar({
         }
         if (id === 'automation-history') {
             window.history.pushState({}, '', '/historico');
+            window.dispatchEvent(new PopStateEvent('popstate'));
+        }
+        if (id === 'settings-access') {
+            window.history.pushState({}, '', '/usuarios');
             window.dispatchEvent(new PopStateEvent('popstate'));
         }
     };
@@ -226,7 +240,7 @@ export default function Sidebar({
 
                 {/* Navigation */}
                 <nav className="sidebar-nav">
-                    {navItems.map(({ id, label, Icon, children }) => {
+                    {filteredNavItems.map(({ id, label, Icon, children }) => {
                         const isGroupActive =
                             activeItem === id || (children && children.some((c) => c.id === activeItem));
                         const isExpanded = expandedMenus.includes(id) && !collapsed;
@@ -287,12 +301,14 @@ export default function Sidebar({
                     {!collapsed && (
                         <div className="sidebar-user-info">
                             <span className="sidebar-user-name" title={user?.nome}>{user?.nome || 'Usuário'}</span>
-                            <span className="sidebar-user-email" title={user?.email}>{user?.email || ''}</span>
+                            <span className="sidebar-user-email" title={user?.email}>
+                                {user?.role === 'admin' ? 'Administrador' : 'Operador'} • {user?.email || ''}
+                            </span>
                         </div>
                     )}
                     <button
                         className="sidebar-logout-btn"
-                        onClick={logout}
+                        onClick={() => logout()}
                         title="Sair do sistema"
                         aria-label="Sair do sistema"
                     >
